@@ -10,43 +10,36 @@ header("Content-Type: application/json; charset=UTF-8");
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/product.php';
+include_once './read.php';
 // instantiate database and product object
 $database = new Database();
 $db = $database->getConnection();
+
 // initialize object
 $product = new Product($db);
-// get variables from header 
-// if(isset($_GET['p'], $_GET['n'], $_GET['c'], $_GET['b'])) {
-//     $prijs = $_GET['p'];
-//     $naam = $_GET['n'];
-//     $categorieid = $_GET['c'];
-//     $beschrijving = $_GET['b'];
-//     $prijs = floatval($prijs);
-//   }
-//   function dbp($waarde)
-//     {
-//         global $conn;
-//         return mysqli_escape_string($conn, $waarde);
-//     }
-class CreateProduct{
-    // protected $prijs;
-    // protected $naam;
-    // protected $categorieid;
-    // protected $beschrijving;
-    function create_product($prijs, $naam, $categorieid, $beschrijving) {
-        // insert query
-        return "INSERT INTO `product`(prijs,naam, categorie_id,beschrijving,toegevoegd_op,gewijzigd_op) VALUES($prijs,'$naam',$categorieid,'$beschrijving', now(), now())";
-        // mysqli_query("INSERT INTO `product`(prijs,naam, categorie_id,beschrijving,now(),now())")
+
+class CreateProduct extends Database{
+
+    public $prijs;
+    public $naam;
+    public $categorieid;
+    public $beschrijving;
+   
+    function create_product() {
+
+        $conn=$this->getConnection();
+        mysqli_query($conn,"INSERT INTO `product`(prijs,naam, categorie_id,beschrijving,toegevoegd_op,gewijzigd_op) VALUES($this->prijs,'$this->naam',$this->categorieid,'$this->beschrijving', now(), now())");
+        
     }
    
 }
-$product = new CreateProduct();
-$newProduct = $product->create_product(10.55, 'max',1, 'ik ben max van gorp');
-if(mysqli_query($database->conn,$newProduct)) {
-    echo "Records inserted successfully.";
-} else{
-    echo "ERROR: Could not able to execute {$newProduct}. ";
-    var_dump($database);
-}
 
+$newProduct = new CreateProduct();
+$newProduct->prijs = 99.99;
+$newProduct->naam = "max van gorp";
+$newProduct->categorieid = 1;
+$newProduct->beschrijving = "ik ben max van gorp en ik ben erg cool, hehe";
+$createProduct = $newProduct->create_product();
+
+?>
 

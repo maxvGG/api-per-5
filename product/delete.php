@@ -11,31 +11,32 @@ header("Content-Type: application/json; charset=UTF-8");
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/product.php';
+include_once './read.php';
 // instantiate database and product object
 $database = new Database();
 $db = $database->getConnection();
 // initialize object
 $product = new Product($db);
+    
 
   function dbp($waarde)
     {
         global $conn;
         return mysqli_escape_string($conn, $waarde);
     }
-class DeleteProduct{
-    function Delete_product($id) {
+class DeleteProduct extends Database{
+    public $id;
+    function Delete_product() {
         // insert query
-        return "DELETE FROM `product` WHERE id=" . $id;
+        $conn =$this->getConnection();
+        mysqli_query($conn,"DELETE FROM `product` WHERE id=" . $this->id);
+        // return "DELETE FROM `product` WHERE id=" . $this->id;
     }
    
 }
 $product = new DeleteProduct();
-$id = 4;
-$deleteProduct = $product->delete_product($id);
-if(mysqli_query($database->conn,$DeleteProduct)) {
-    echo "Records deleted successfully.";
-} else{
-    echo "ERROR: Could not able to execute {$DeleteProduct}. ";
-}
+$product->id = $product_item['id'];
+$deleteProduct = $product->delete_product();
+
 
 

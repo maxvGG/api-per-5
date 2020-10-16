@@ -10,44 +10,34 @@ header("Content-Type: application/json; charset=UTF-8");
 // include database and object files
 include_once '../config/database.php';
 include_once '../objects/product.php';
+include_once './read.php';
 // instantiate database and product object
 $database = new Database();
 $db = $database->getConnection();
 // initialize object
 $product = new Product($db);
-// get variables from header 
-// if(isset($_GET['p'], $_GET['n'], $_GET['c'], $_GET['b'])) {
-//     $prijs = $_GET['p'];
-//     $naam = $_GET['n'];
-//     $categorieid = $_GET['c'];
-//     $beschrijving = $_GET['b'];
-//     $prijs = floatval($prijs);
-//   }
-//   function dbp($waarde)
-//     {
-//         global $conn;
-//         return mysqli_escape_string($conn, $waarde);
-//     }
-class UpdateProduct{
-    function Update_product($prijs, $naam, $categorieid, $beschrijving, $id) {
+
+class UpdateProduct extends Database{
+    public $prijs;
+    public $naam;
+    public $categorieid;
+    public $beschrijving;
+    public $id;
+
+    function Update_product() {
         // insert query
-        return "UPDATE `product` SET naam = '$naam', prijs = $prijs, categorie_id = $categorieid, gewijzigd_op = now(), beschrijving = '$beschrijving' WHERE id =  $id";
-        // mysqli_query("INSERT INTO `product`(prijs,naam, categorie_id,beschrijving,now(),now())")
+        $conn=$this->getConnection();
+        mysqli_query($conn,"UPDATE `product` SET naam = '$this->naam', prijs = $this->prijs, categorie_id = $this->categorieid, gewijzigd_op = now(), beschrijving = '$this->beschrijving' WHERE id =  $this->id");
+        // var_dump(mysqli_query($conn,"UPDATE `product` SET naam = '$this->naam', prijs = $this->prijs, categorie_id = $this->categorieid, gewijzigd_op = now(), beschrijving = '$this->beschrijving' WHERE id =  $this->id")   );
     }
    
 }
-$product = new UpdateProduct();
-$prijs = 59.99;
-$naam = 'league';
-$categorieid = 1;
-$beschrijving = 'League is een Moba';
-$id = 2;
-$prijs = floatval($prijs);
-$UpdateProduct = $product->Update_product($prijs, $naam,$categorieid, $beschrijving, $id);
-if(mysqli_query($database->conn,$UpdateProduct)) {
-    echo "Records inserted successfully.";
-} else{
-    echo "ERROR: Could not able to execute {$UpdateProduct}. ";
-}
 
-
+$up = new UpdateProduct;
+$up->prijs = 10;
+$up->naam = 'dit is de nieuwe naam';
+$up->categorieid=1;
+$up->beschrijving = 'dit is de nieuwe beschrijving';
+$up->id=$product_item['id'];
+$up->Update_product();
+// var_dump($product_item['id']);

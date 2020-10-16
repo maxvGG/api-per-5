@@ -22,7 +22,10 @@ if($num>0) {
             "id" => $row['id'],
             "naam" => $row['naam'],
             "beschrijving" => html_entity_decode($row['beschrijving']),
-            "prijs" => $row['prijs']
+            "prijs" => $row['prijs'],
+            "categorie" => $row['categorie_id'],
+            "update_datum" => $row['gewijzigd_op'],
+            "toegevoegd" => $row['toegevoegd_op'] 
         );
         array_push($product_arr, $product_item);
     }

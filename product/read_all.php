@@ -35,8 +35,8 @@ if($num>0){
    }
    // set response code - 200 OK
    http_response_code(200);
-   var_dump($products_arr);
-   //echo($products_arr[0]['id']);
+//    var_dump($products_arr);
+
 }
 else{
    // set response code - 404 Not found
