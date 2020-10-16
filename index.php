@@ -11,7 +11,6 @@
     </style>
 </head>
 <body>
-<<<<<<< HEAD
 <table>
         <thead>
             <tr>
@@ -22,13 +21,6 @@
                 <th>toevoegd op:</th>
                 <th>gewijzigd op</th>
                 <th>id</th>
-=======
-    <table>
-        <thead>
-            <tr>
-                <th>naam</th>
-                <th>prijs</th>
->>>>>>> f1bec37a73465b4de3fff1be14b27eeb3de82b05
             </tr>
         </thead>
         <tbody id="products">
@@ -36,16 +28,11 @@
 
         </tbody>
     </table>
-<<<<<<< HEAD
     <button><a href="create.php" target="_blank">create.php</a></button>
     <button><a href="delete.php" target="_blank">delete.php</a></button>
     <button><a href="update.php" target="_blank">update.php</a></button>
     <button type="button" onClick="window.location.reload();">refresh page</button>
 <script>
-=======
-    
-    <script>
->>>>>>> f1bec37a73465b4de3fff1be14b27eeb3de82b05
         fetch("./product/read.php")
         .then((response) => response.json())
         .then((data) => {
@@ -54,7 +41,6 @@
             var row = table.insertRow(i);
             var cell1 = row.insertCell(0);
             var cell2 = row.insertCell(1);
-<<<<<<< HEAD
             var cell3 = row.insertCell(2);
             var cell4 = row.insertCell(3);
             var cell5 = row.insertCell(4);
@@ -67,10 +53,6 @@
             cell5.innerHTML = data[i].toegevoegd;
             cell6.innerHTML = data[i].update_datum;
             cell7.innerHTML = data[i].id;
-=======
-            cell1.innerHTML = data[i].naam;
-            cell2.innerHTML = data[i].prijs;
->>>>>>> f1bec37a73465b4de3fff1be14b27eeb3de82b05
         }
         })
         .catch((error) => console.log("error is ", error));
